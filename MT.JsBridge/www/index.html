@@ -1,0 +1,82 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Spectrum Playground</title>
+		<!-- Mobile viewport optimized: h5bp.com/viewport -->
+		<!--<meta name="viewport" content="width=1024px">-->
+		<meta name="viewport" content="width=device-width" />
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+		<link rel="stylesheet" href="css/boilerplate.css">
+		<link rel="stylesheet" href="css/video-js.min.css">
+		<link rel="stylesheet" href="css/button.css">
+		<link rel="stylesheet" href="https://dev.spectrumplayground.com/files/lessons/css/gameEngine.css">
+		<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+		<!-- All JavaScript at the bottom, except this Modernizr build.
+		Modernizr enables HTML5 elements & feature detects for optimal performance.
+		Create your own custom Modernizr build: www.modernizr.com/download/ -->
+		<script src="js/libs/modernizr-2.5.0.min.js"></script>
+	</head>
+	<body class="no-touch">
+		<header></header>
+		<div role="main" id="gameArea">
+			<div id="loading" class="huge">
+				Loading...
+			</div>
+		</div>
+		<footer>
+			<!--<a href="javascript:loadTrial()">Trial</a>
+			<a href="javascript:loadLetters()">Letters</a>-->
+		</footer>
+		<!-- JavaScript at the bottom for fast page loading -->
+		<!-- scripts concatenated and minified via build script -->
+		<script src="js/libs/jquery-1.7.1.min.js"></script>
+		<script src="js/libs/jquery-ui-1.8.17.custom.min.js"></script>
+		<script src="js/libs/underscore-min.js"></script>
+		<script src="js/libs/video.min.js"></script>
+		<script src="https://dev.spectrumplayground.com/files/lessons/js/gameEngine.extensions.js"></script>
+		<script src="js/gameEngine.extensions.titanium.js"></script>
+		<script src="https://dev.spectrumplayground.com/files/lessons/js/gameEngine.js"></script>
+		<script src="https://dev.spectrumplayground.com/files/lessons/js/gameEngine.spg.js"></script>
+		<script src="js/gameEngine.spg.titanium.js"></script>
+		<script src="js/gameEngine.sound.titanium.js"></script>
+		<script src="js/libs/ensure.js"></script>
+		<script src="js/libs/doubletap.js"></script>
+		<script>
+			console.log('hi1');
+			$(document).ready(function(e) {
+				console.log(spg.rootUrl + 'lesson/getLessons');
+				// get lesson json from server.
+				$.ajax({
+					url : spg.rootUrl + 'lesson/getLessons',
+					type : 'GET',
+					dataType : 'jsonp',
+					contentType : 'application/json; charset=utf-8',
+					success : function(data) {
+						console.log('server data');
+						console.log(data);
+
+						gameEngine.loadData(data, gameEngine.start);
+					},
+					error : function(xhr, textStatus, errorThrown) {
+						console.log('failed to get lesson data');
+						console.log(textStatus);
+						console.log(errorThrown);
+						console.log(xhr);
+					}
+				});
+
+			});
+
+		</script>
+		<!-- end scripts -->
+		<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+		mathiasbynens.be/notes/async-analytics-snippet -->
+		<script>
+			var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+			//(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+			//g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+			//s.parentNode.insertBefore(g,s)}(document,'script'));
+		</script>
+	</body>
+</html>

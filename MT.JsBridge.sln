@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MT.JsBridge", "MT.JsBridge\MT.JsBridge.csproj", "{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Debug|iPhone.Build.0 = Debug|iPhone
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Release|iPhone.ActiveCfg = Release|iPhone
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Release|iPhone.Build.0 = Release|iPhone
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MT.JsBridge\MT.JsBridge.csproj
+	EndGlobalSection
+EndGlobal
