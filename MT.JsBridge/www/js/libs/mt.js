@@ -1,27 +1,27 @@
-Ti = {};
-Ti.appId = 'jsbridge';
-Ti.pageToken = 'index';
-Ti.App = {};
-Ti.API = {};
-Ti.App._listeners = {};
-Ti.App._listener_id = 1;
-Ti.App.id = Ti.appId;
-Ti.App._xhr = XMLHttpRequest;
-Ti._broker = function (module, method, data) {
+Mt = {};
+Mt.appId = 'jsbridge';
+Mt.pageToken = 'index';
+Mt.App = {};
+Mt.API = {};
+Mt.App._listeners = {};
+Mt.App._listener_id = 1;
+Mt.App.id = Mt.appId;
+Mt.App._xhr = XMLHttpRequest;
+Mt._broker = function (module, method, data) {
     try {
-        var url = 'app://' + Ti.appId + '/_TiA0_' + Ti.pageToken + '/' + module + '/' + method + '?' + Ti.App._JSON(data, 1);
+        var url = 'app://' + Mt.appId + '/_MtA0_' + Mt.pageToken + '/' + module + '/' + method + '?' + Mt.App._JSON(data, 1);
         //TODO: switch to xhr way when Mono fixes NSUrlProtocol.RegisterClass
         window.location.href = url;
         return;
         
-        var xhr = new Ti.App._xhr();
+        var xhr = new Mt.App._xhr();
         xhr.open('GET', url, false);
         xhr.send()
     } catch (X) {
     	console.log('error');
     }
 };
-Ti._hexish = function (a) {
+Mt._hexish = function (a) {
     var r = '';
     var e = a.length;
     var c = 0;
@@ -38,10 +38,10 @@ Ti._hexish = function (a) {
     }
     return r
 };
-Ti._bridgeEnc = function (o) {
-    return'<' + Ti._hexish(o) + '>'
+Mt._bridgeEnc = function (o) {
+    return'<' + Mt._hexish(o) + '>'
 };
-Ti.App._JSON = function (object, bridge) {
+Mt.App._JSON = function (object, bridge) {
     var type = typeof object;
     switch (type) {
         case'undefined':
@@ -52,7 +52,7 @@ Ti.App._JSON = function (object, bridge) {
         case'boolean':
             return object;
         case'string':
-            if (bridge === 1)return Ti._bridgeEnc(object);
+            if (bridge === 1)return Mt._bridgeEnc(object);
             return'""' + object.replace(/""/g, '\\\\""').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') + '""'
     }
     if ((object === null) || (object.nodeType == 1))return'null';
@@ -65,7 +65,7 @@ Ti.App._JSON = function (object, bridge) {
         var len = object.length;
         for (var i = 0; i < len; i++) {
             var value = object[i];
-            if (value !== undefined)value = Ti.App._JSON(value, bridge);
+            if (value !== undefined)value = Mt.App._JSON(value, bridge);
             if (value !== undefined) {
                 res += pre + value;
                 pre = ', '
@@ -77,18 +77,18 @@ Ti.App._JSON = function (object, bridge) {
     for (var prop in object) {
         var value = object[prop];
         if (value !== undefined) {
-            value = Ti.App._JSON(value, bridge)
+            value = Mt.App._JSON(value, bridge)
         }
         if (value !== undefined) {
-            objects.push(Ti.App._JSON(prop, bridge) + ': ' + value)
+            objects.push(Mt.App._JSON(prop, bridge) + ': ' + value)
         }
     }
     return'{' + objects.join(',') + '}'
 };
 //CDeutsch: removing evtid param
-//Ti.App._dispatchEvent = function (type, evtid, evt) {
-Ti.App._dispatchEvent = function (type, evt) {
-    var listeners = Ti.App._listeners[type];
+//Mt.App._dispatchEvent = function (type, evtid, evt) {
+Mt.App._dispatchEvent = function (type, evt) {
+    var listeners = Mt.App._listeners[type];
     if (listeners) {
         for (var c = 0; c < listeners.length; c++) {
             var entry = listeners[c];
@@ -99,47 +99,47 @@ Ti.App._dispatchEvent = function (type, evt) {
         }
     }
 };
-Ti.App.fireEvent = function (name, evt) {
-    Ti._broker('App', 'fireEvent', {name:name, event:evt})
+Mt.App.fireEvent = function (name, evt) {
+    Mt._broker('App', 'fireEvent', {name:name, event:evt})
 };
-Ti.API.log = function (a, b) {
-    Ti._broker('API', 'log', {level:a, message:b})
+Mt.API.log = function (a, b) {
+    Mt._broker('API', 'log', {level:a, message:b})
 };
-Ti.API.debug = function (e) {
-    Ti._broker('API', 'log', {level:'debug', message:e})
+Mt.API.debug = function (e) {
+    Mt._broker('API', 'log', {level:'debug', message:e})
 };
-Ti.API.error = function (e) {
-    Ti._broker('API', 'log', {level:'error', message:e})
+Mt.API.error = function (e) {
+    Mt._broker('API', 'log', {level:'error', message:e})
 };
-Ti.API.info = function (e) {
-    Ti._broker('API', 'log', {level:'info', message:e})
+Mt.API.info = function (e) {
+    Mt._broker('API', 'log', {level:'info', message:e})
 };
-Ti.API.fatal = function (e) {
-    Ti._broker('API', 'log', {level:'fatal', message:e})
+Mt.API.fatal = function (e) {
+    Mt._broker('API', 'log', {level:'fatal', message:e})
 };
-Ti.API.warn = function (e) {
-    Ti._broker('API', 'log', {level:'warn', message:e})
+Mt.API.warn = function (e) {
+    Mt._broker('API', 'log', {level:'warn', message:e})
 };
-Ti.App.addEventListener = function (name, fn) {
-    var listeners = Ti.App._listeners[name];
+Mt.App.addEventListener = function (name, fn) {
+    var listeners = Mt.App._listeners[name];
     if (typeof(listeners) == 'undefined') {
         listeners = [];
-        Ti.App._listeners[name] = listeners
+        Mt.App._listeners[name] = listeners
     }
-    var newid = Ti.pageToken + Ti.App._listener_id++;
+    var newid = Mt.pageToken + Mt.App._listener_id++;
     listeners.push({callback:fn, id:newid});
     //CDeutsch: not going to do this (don't see the advatange right now
-    //Ti._broker('App', 'addEventListener', {name:name, id:newid})
+    //Mt._broker('App', 'addEventListener', {name:name, id:newid})
 };
-Ti.App.removeEventListener = function (name, fn) {
-    var listeners = Ti.App._listeners[name];
+Mt.App.removeEventListener = function (name, fn) {
+    var listeners = Mt.App._listeners[name];
     if (listeners) {
         for (var c = 0; c < listeners.length; c++) {
             var entry = listeners[c];
             if (entry.callback == fn) {
                 listeners.splice(c, 1);
                 //CDeutsch: not going to do this (don't see the advatange right now
-                //Ti._broker('App', 'removeEventListener', {name:name, id:entry.id});
+                //Mt._broker('App', 'removeEventListener', {name:name, id:entry.id});
                 break
             }
         }

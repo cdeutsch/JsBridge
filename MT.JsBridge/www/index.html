@@ -8,12 +8,11 @@
 			Loading...
 		</div>
 		
-		<script src="js/libs/mt.js"></script>		
 		<script>
 			window.onload = function(e) {
 		
 				// listen to doBrowserStuff event triggered from native code.
-				Ti.App.addEventListener('doBrowserStuff', function(data) {
+				Mt.App.addEventListener('doBrowserStuff', function(data) {
 			
 					console.log('doBrowserStuff Callback:');
 					console.log(data.Message);
@@ -21,7 +20,7 @@
 				});
 			
 				// fire doNativeStuff in native code.
-				Ti.App.fireEvent('doNativeStuff', { msg: 'Hi, this msg is from the browser.' });
+				Mt.App.fireEvent('doNativeStuff', { msg: 'Hi, this msg is from the browser.' });
 			
 			};
 
