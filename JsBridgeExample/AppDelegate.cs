@@ -31,24 +31,23 @@ namespace cdeutsch
 			viewController = new MT_JsBridgeViewController ();
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
-						
-			//viewController.WebView.LoadRequest(new NSUrlRequest(new NSUrl("http://slashdot.org/")));
-			
+									
 			// get path to file.
 			string path = NSBundle.MainBundle.PathForResource("www/index", "html");
 			// create an address and escape whitespace
 			string address = string.Format("file:{0}", path).Replace(" ", "%20");
 			
-			//AppProtocolHandler.RegisterSpecialProtocol();
 			
+			// be sure to enable JS Bridge before loading your document.
 			viewController.WebView.EnableJsBridge();
 			viewController.WebView.LoadRequest(new NSUrlRequest(new NSUrl(address)));
 			
+			// listen for the doNativeStuff event triggered by the browser.
 			viewController.WebView.AddEventListener("doNativeStuff", delegate(FireEventData arg) {
 				Console.WriteLine("doNativeStuff Callback:");	
 				Console.WriteLine(arg.Event["msg"]);
 				
-				// fire msg back
+				// trigger doBrowserStuff event in browser.
 				viewController.WebView.FireEvent("doBrowserStuff", new LogData() {
 					Level = "log",
 					Message = "The Native code says hi back. ;)"

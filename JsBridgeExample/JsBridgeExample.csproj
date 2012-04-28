@@ -74,9 +74,6 @@
     <Compile Include="MT_JsBridgeViewController.designer.cs">
       <DependentUpon>MT_JsBridgeViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="MT\XHRBridge.cs" />
-    <Compile Include="MT\JsBridge.cs" />
-    <Compile Include="MT\SimpleJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MT_JsBridgeViewController_iPhone.xib" />
@@ -85,13 +82,14 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="www\" />
-    <Folder Include="www\css\" />
-    <Folder Include="www\js\" />
-    <Folder Include="www\js\libs\" />
-    <Folder Include="MT\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\index.html" />
-    <Content Include="www\js\libs\mt.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsBridge\JsBridge.csproj">
+      <Project>{63EEEE1D-B4F4-499E-872D-0AFB51AC5E8B}</Project>
+      <Name>JsBridge</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
