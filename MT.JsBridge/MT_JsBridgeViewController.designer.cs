@@ -6,7 +6,7 @@
 //
 using MonoTouch.Foundation;
 
-namespace MT.JsBridge
+namespace cdeutsch
 {
 	[Register ("MT_JsBridgeViewController")]
 	partial class MT_JsBridgeViewController

@@ -4,7 +4,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace MT.JsBridge
+namespace cdeutsch
 {
 	public partial class MT_JsBridgeViewController : UIViewController
 	{

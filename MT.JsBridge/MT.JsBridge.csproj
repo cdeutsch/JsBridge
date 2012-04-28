@@ -8,7 +8,7 @@
     <ProjectGuid>{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MT.JsBridge</RootNamespace>
+    <RootNamespace>cdeutsch</RootNamespace>
     <AssemblyName>MTJsBridge</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -24,6 +24,7 @@
     <MtouchProfiling>true</MtouchProfiling>
     <MtouchLink>None</MtouchLink>
     <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -61,6 +62,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -72,10 +74,24 @@
     <Compile Include="MT_JsBridgeViewController.designer.cs">
       <DependentUpon>MT_JsBridgeViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="MT\XHRBridge.cs" />
+    <Compile Include="MT\JsBridge.cs" />
+    <Compile Include="MT\SimpleJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MT_JsBridgeViewController_iPhone.xib" />
     <InterfaceDefinition Include="MT_JsBridgeViewController_iPad.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="www\" />
+    <Folder Include="www\css\" />
+    <Folder Include="www\js\" />
+    <Folder Include="www\js\libs\" />
+    <Folder Include="MT\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="www\index.html" />
+    <Content Include="www\js\libs\mt.js" />
+  </ItemGroup>
 </Project>
