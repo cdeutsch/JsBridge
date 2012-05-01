@@ -26,34 +26,50 @@ namespace cdeutsch
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+            JsBridge.EnableJsBridge();
+
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
+            // the MT_JsBridgeViewController just contains a single UIWebView exposed as "WebView".
 			viewController = new MT_JsBridgeViewController ();
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
-									
+			
+            //// load our local index.html file	
 			// get path to file.
-			string path = NSBundle.MainBundle.PathForResource("www/index", "html");
+			string path = NSBundle.MainBundle.PathForResource( "www/index", "html" );
 			// create an address and escape whitespace
-			string address = string.Format("file:{0}", path).Replace(" ", "%20");
+			string address = string.Format("file:{0}", path).Replace( " ", "%20" );
 			
-			
-			// be sure to enable JS Bridge before loading your document.
-			viewController.WebView.EnableJsBridge();
+			// be sure to enable JS Bridge before trying to fire events.
 			viewController.WebView.LoadRequest(new NSUrlRequest(new NSUrl(address)));
 			
 			// listen for the doNativeStuff event triggered by the browser.
-			viewController.WebView.AddEventListener("doNativeStuff", delegate(FireEventData arg) {
+			viewController.WebView.AddEventListener( "doNativeStuff", delegate(FireEventData arg) {
 				Console.WriteLine("doNativeStuff Callback:");	
-				Console.WriteLine(arg.Event["msg"]);
+				Console.WriteLine(arg.Data["msg"]);
 				
 				// trigger doBrowserStuff event in browser.
-				viewController.WebView.FireEvent("doBrowserStuff", new LogData() {
+				viewController.WebView.FireEvent( "doBrowserStuff", new LogData() {
 					Level = "log",
 					Message = "The Native code says hi back. ;)"
 				});
 			});
 			
+            // listen for the nativeSheet event triggered by the browser.
+            viewController.WebView.AddEventListener( "nativeSheet", delegate(FireEventData arg) {
+
+                // show a native action sheet
+                BeginInvokeOnMainThread (delegate { 
+                    var sheet = new UIActionSheet ( "Your Action Sheet" );
+                    sheet.AddButton ( arg.Data["msg"].ToString() );
+                    sheet.AddButton ( "Cancel" );
+                    sheet.CancelButtonIndex = 1;
+                    sheet.ShowInView ( viewController.View );
+                });
+
+            });
+
 			return true;
 		}
 	}

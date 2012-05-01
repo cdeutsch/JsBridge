@@ -1,3 +1,5 @@
+// CDEUTSCH: this file take from RestSharp only change is namespace to prevent issues.
+
 //-----------------------------------------------------------------------
 // <copyright file="SimpleJson.cs" company="The Outercurve Foundation">
 //    Copyright (c) 2011, The Outercurve Foundation.
@@ -18,7 +20,6 @@
 //-----------------------------------------------------------------------
 
 // NOTE: uncomment the following line to make SimpleJson class internal.
-#define SIMPLE_JSON_INTERNAL
 
 // NOTE: uncomment the following line to make JsonArray and JsonObject class internal.
 //#define SIMPLE_JSON_OBJARRAYINTERNAL
@@ -36,6 +37,7 @@
 // NOTE: uncomment the following line if you are compiling under Window Metro style application/library.
 // usually already defined in properties
 //#define NETFX_CORE;
+
 
 // original json parsing code from http://techblog.procurios.nl/k/618/news/view/14605/14863/How-do-I-write-my-own-parser-for-JSON.html
 
@@ -56,9 +58,9 @@ using System.Reflection.Emit;
 using System.Runtime.Serialization;
 #endif
 using System.Text;
-using RestSharp.Reflection;
+using cdeutsch.Reflection;
 
-namespace RestSharp
+namespace cdeutsch
 {
     #region JsonArray
 
@@ -467,7 +469,7 @@ namespace RestSharp
     #endregion
 }
 
-namespace RestSharp
+namespace cdeutsch
 {
     #region JsonParser
 

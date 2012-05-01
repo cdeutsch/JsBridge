@@ -11,7 +11,9 @@ namespace cdeutsch
 {
 	public static class JsBridge
 	{
-		
+	
+        // most of this library is borrowed from Titanium, Copyright 2008-2012 Appcelerator, Inc. under the Apache License Version 2 http://www.apache.org/licenses/LICENSE-2.0
+        //I haven't implemented all the features they have.
 		#region MT_JAVASCRIPT
 		private static string MT_JAVASCRIPT = @"Mt = {};
 Mt.appId = 'jsbridge';
@@ -25,15 +27,12 @@ Mt.App._xhr = XMLHttpRequest;
 Mt._broker = function (module, method, data) {
     try {
         var url = 'app://' + Mt.appId + '/_MtA0_' + Mt.pageToken + '/' + module + '/' + method + '?' + Mt.App._JSON(data, 1);
-        //TODO: switch to xhr way when Mono fixes NSUrlProtocol.RegisterClass
-        window.location.href = url;
-        return;
-        
         var xhr = new Mt.App._xhr();
         xhr.open('GET', url, false);
-        xhr.send()
-    } catch (X) {
-    	console.log('error');
+        xhr.send(); 
+    } catch (ex) {
+        console.log('error');
+        console.log(JSON.stringify(ex));
     }
 };
 Mt._hexish = function (a) {
@@ -161,45 +160,20 @@ Mt.App.removeEventListener = function (name, fn) {
     }
 };";
 	#endregion
-		
-		public static void EnableJsBridge(this UIWebView source) {
-			source.ShouldStartLoad += ShouldStartLoadHandler;
-			source.EvaluateJavascript(MT_JAVASCRIPT);
-		}
-		
-		private static bool ShouldStartLoadHandler (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navType)
-		{
-		    // Determine what to do here based on the @request and @navType
-			var appUrl = AppUrl.ParseUrl(request.Url);
-			if (appUrl != null) {
-				// this is a request from mt.js so handle it.
-				switch (appUrl.Module.ToLower()) 
-				{
-					case "app":
-						if (string.Equals(appUrl.Method, "fireEvent", StringComparison.InvariantCultureIgnoreCase)) {
-							// fire this event.
-							var feData = appUrl.DeserializeFireEvent();
-							// find event listeners for this event and trigger it.
-							webView._JsEventFired(feData);
-						}
-					
-						break;
-						
-					case "api":
-						if (string.Equals(appUrl.Method, "log", StringComparison.InvariantCultureIgnoreCase)) {
-							// log output.
-							var lData = appUrl.DeserializeLog();
-							Console.WriteLine("[" + lData.Level + "]: " + lData.Message);
-						}
-					
-						break;
-				}
-				
-				return false;
-			}		    
-		    
-		    return true;
-		} 
+
+        static bool protocolRegistered = false;
+
+        public static void EnableJsBridge() {
+            if (!protocolRegistered) {              
+                NSUrlProtocol.RegisterClass (new MonoTouch.ObjCRuntime.Class (typeof (AppProtocolHandler)));
+
+                protocolRegistered = true;
+            }
+        }
+
+        public static void InjectMtJavascript(this UIWebView webView) {
+            webView.EvaluateJavascript(MT_JAVASCRIPT);
+        }
 		
 		private static List<EventListener> EventListeners = new List<EventListener>();
 		
@@ -221,20 +195,105 @@ Mt.App.removeEventListener = function (name, fn) {
 		
 		public static void FireEvent (this UIWebView source, string EventName, Object Data) {
 			// call javascript event hanlder code
-			string json = RestSharp.SimpleJson.SerializeObject(Data);
-			source.EvaluateJavascript(string.Format("Mt.App._dispatchEvent('{0}', {1});", EventName, json));
+			string json = SimpleJson.SerializeObject(Data);
+            source.BeginInvokeOnMainThread ( delegate{ 
+			    source.EvaluateJavascript(string.Format("Mt.App._dispatchEvent('{0}', {1});", EventName, json));
+            });
 		}
 		
-		public static void _JsEventFired (this UIWebView source, FireEventData feData) {
-			foreach(var ee in EventListeners.Where(oo => string.Compare(oo.EventName, feData.Name, StringComparison.InvariantCultureIgnoreCase) == 0)) {
-				if (ee.WebView == source) {
-					ee.Event(feData);
-				}
+		public static void JsEventFired (FireEventData feData) {
+			foreach(var ee in EventListeners.Where(oo => string.Compare(oo.EventName, feData.Name, StringComparison.InvariantCultureIgnoreCase) == 0)) {				
+				ee.Event(feData);				
 			}
 		}
 		
 	}
 	
+
+    public class AppProtocolHandler : NSUrlProtocol {
+        static bool inited = false;
+
+        [Export ("canInitWithRequest:")]
+        public static bool canInitWithRequest (NSUrlRequest request)
+        {
+            return request.Url.Scheme == "app";
+        }
+
+        [Export ("canonicalRequestForRequest:")]
+        public static new NSUrlRequest GetCanonicalRequest (NSUrlRequest forRequest)
+        {
+            return forRequest;
+        }
+
+        [Export ("initWithRequest:cachedResponse:client:")]
+        public AppProtocolHandler (NSUrlRequest request, NSCachedUrlResponse cachedResponse, NSUrlProtocolClient client) 
+            : base (request, cachedResponse, client)
+        {
+        }
+
+        public override void StartLoading ()
+        {
+            // Determine what to do here based on the url 
+            var appUrl = AppUrl.ParseUrl(Request.Url);
+            if (appUrl != null) {
+                // this is a request from mt.js so handle it.
+                switch (appUrl.Module.ToLower()) 
+                {
+                    case "app":
+                        if (string.Equals(appUrl.Method, "fireEvent", StringComparison.InvariantCultureIgnoreCase)) {
+                            // fire this event.
+                            var feData = appUrl.DeserializeFireEvent();
+                            // find event listeners for this event and trigger it.
+                            JsBridge.JsEventFired(feData);
+                        }
+                    
+                        break;
+                        
+                    case "api":
+                        if (string.Equals(appUrl.Method, "log", StringComparison.InvariantCultureIgnoreCase)) {
+                            // log output.
+                            var lData = appUrl.DeserializeLog();
+#if DEBUG
+                            Console.WriteLine("[" + lData.Level + "]: " + lData.Message);
+#endif
+                        }
+                    
+                        break;
+                }
+
+                var data = new NSData();
+                using (var response = new NSUrlResponse (Request.Url, "text/plain", Convert.ToInt32(data.Length), "utf-8")) {
+                    Client.ReceivedResponse (this, response, NSUrlCacheStoragePolicy.NotAllowed);
+                    Client.DataLoaded (this, data);
+                    Client.FinishedLoading (this);
+                }
+                return;
+                    
+            }           
+            Client.FailedWithError(this, NSError.FromDomain(new NSString("AppProtocolHandler"), Convert.ToInt32(NSUrlError.ResourceUnavailable)));
+            Client.FinishedLoading(this);
+
+            /*
+            var value = Request.Url.Path.Substring (1);
+            using (var image = Render (value)) {
+                using (var response = new NSUrlResponse (Request.Url, "image/jpeg", -1, null)) {
+                    using (var data = image.AsJPEG ()) {
+                        Client.ReceivedResponse (this, response, NSUrlCacheStoragePolicy.NotAllowed);
+                        Client.DataLoaded (this, data);
+                        Client.FinishedLoading (this);
+                    }
+                }
+            }
+            */
+        }
+
+        public override void StopLoading ()
+        {
+        }
+        
+    }
+
+
 	public class EventListener {
 		public UIWebView WebView { get; set; }
 		public string EventName { get; set; }
@@ -256,11 +315,11 @@ Mt.App.removeEventListener = function (name, fn) {
 		public string JsonData { get; set; }
 		
 		public Object Deserialize() {
-			return RestSharp.SimpleJson.DeserializeObject(JsonData);
+			return SimpleJson.DeserializeObject(JsonData);
 		}
 		
 		public T Deserialize<T>() {
-			return RestSharp.SimpleJson.DeserializeObject<T>(JsonData);
+			return SimpleJson.DeserializeObject<T>(JsonData);
 		}
 		
 		public FireEventData DeserializeFireEvent() {
@@ -323,25 +382,25 @@ Mt.App.removeEventListener = function (name, fn) {
 		}
 	}
 	
+
 	public class FireEventData {
 		public string Name { get; set; }
-		public RestSharp.JsonObject Event { get; set; }
+		public JsonObject Data { get; set; }
 		public string JsonData { get; set; }
 		
 		public FireEventData() {
 		}
 		
 		public FireEventData(string Json) {
-			RestSharp.JsonObject feData = (RestSharp.JsonObject)RestSharp.SimpleJson.DeserializeObject(Json);
+			JsonObject feData = (JsonObject)SimpleJson.DeserializeObject(Json);
 			this.Name = feData["name"].ToString();
-			this.Event = (RestSharp.JsonObject)feData["event"];
+			this.Data = (JsonObject)feData["event"];
 			// save json of data so user can desiralize in a typed object.
-			this.JsonData = RestSharp.SimpleJson.SerializeObject(this.Event);
+			this.JsonData = SimpleJson.SerializeObject(this.Data);
 		}
 	}
 	
-	
-	
+
 	public class LogData {
 		public string Level { get; set; }
 		public string Message { get; set; }
@@ -350,10 +409,13 @@ Mt.App.removeEventListener = function (name, fn) {
 		}
 		
 		public LogData(string Json) {
-			RestSharp.JsonObject lData = (RestSharp.JsonObject)RestSharp.SimpleJson.DeserializeObject(Json);
+			JsonObject lData = (JsonObject)SimpleJson.DeserializeObject(Json);
 			this.Level = lData["level"].ToString();
-			this.Message = lData["message"].ToString();
+            if (lData["message"] != null) {
+			    this.Message = lData["message"].ToString();
+            }
 		}
 	}
+
 }
 

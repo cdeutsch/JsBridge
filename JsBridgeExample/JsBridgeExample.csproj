@@ -82,9 +82,11 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="www\" />
+    <Folder Include="www\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\index.html" />
+    <Content Include="www\js\mt.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsBridge\JsBridge.csproj">

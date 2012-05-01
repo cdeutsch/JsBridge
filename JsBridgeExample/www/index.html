@@ -1,17 +1,24 @@
 <!doctype html>
 <html>
 	<head>
-		<title>MT.JsBridge</title>
+		<title>MonoTouch JsBridge</title>
 	</head>
 	<body>
 		<div role="main">
-			Loading...
+			<p>Loading MonoTouch JsBridge Demo...</p>
+            <a href="javascript:Mt.App.fireEvent('nativeSheet', { msg: window.prompt(' Enter a cool name for you action ') });">Click Me to show a Native Action Sheet</a>
 		</div>
-		
+
+        <!-- Be sure you include a copy of mt.js or call "myWebView.InjectMtJavascript();" on every page you want to use JsBridg in -->
+        <script src="js/mt.js"></script>
 		<script>
+
 			window.onload = function(e) {
-		
-				// listen to doBrowserStuff event triggered from native code.
+                console.log( 'loaded' );
+                
+                Mt.API.info( 'log "loaded" call on native side' );
+                     
+				// listen for doBrowserStuff event triggered from native code.
 				Mt.App.addEventListener('doBrowserStuff', function(data) {
 			
 					console.log('doBrowserStuff Callback:');
@@ -20,9 +27,19 @@
 				});
 			
 				// fire doNativeStuff in native code.
-				Mt.App.fireEvent('doNativeStuff', { msg: 'Hi, this msg is from the browser.' });
-			
+				Mt.App.fireEvent('doNativeStuff', { 
+                    msg: 'Hi, this msg is from the browser.',
+                    extra: 'You can send more then one property back',
+                    answer: 42
+                });
+                 
 			};
+
+            // do this, to write console log calls to Native 
+            //    NOTE: this is overridden in next statement, just here to show you how to do it.
+            console.log = function(msg) {
+                Mt.API.info( msg );
+            };
 
 			// write console log calls to body.
 			console.log = function(msg) {
