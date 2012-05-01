@@ -50,9 +50,10 @@ namespace cdeutsch
 				Console.WriteLine(arg.Data["msg"]);
 				
 				// trigger doBrowserStuff event in browser.
-				viewController.WebView.FireEvent( "doBrowserStuff", new LogData() {
-					Level = "log",
-					Message = "The Native code says hi back. ;)"
+				viewController.WebView.FireEvent( "doBrowserStuff", new {
+					Message = "The Native code says hi back. ;)",
+                    Extra = "more properties",
+                    Success = true
 				});
 			});
 			
