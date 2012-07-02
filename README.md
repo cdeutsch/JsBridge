@@ -4,7 +4,7 @@ This library allows for bidirectional communication with the UIWebView in Monoto
 
 ## Requirements
 
-* MonoTouch 5.3.3 (as of 5/1/2010 this is an Alpha) is required due to the use of registering a custom url protocol using NSUrlProtocol.
+* MonoTouch 5.3.3 (as of 5/1/2012 this is an Alpha) is required due to the use of registering a custom url protocol using NSUrlProtocol.
 http://docs.xamarin.com/ios/releases/MonoTouch_5/MonoTouch_5.3#MonoTouch_5.3.3
 
 
