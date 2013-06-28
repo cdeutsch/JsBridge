@@ -177,11 +177,11 @@ Mt.App.removeEventListener = function (name, fn) {
 		
 		private static List<EventListener> EventListeners = new List<EventListener>();
 		
-		public static void AddEventListener (this UIWebView source, string EventName, Func<FireEventData, Void> Event) {
+		public static void AddEventListener (this UIWebView source, string EventName, Action<FireEventData> Event) {
 			EventListeners.Add( new EventListener(source, EventName, Event) );
 		}
 		
-		public static void RemoveEventListener (this UIWebView source, string EventName, Func<FireEventData, Void> Event) {
+		public static void RemoveEventListener (this UIWebView source, string EventName, Action<FireEventData> Event) {
 			for(int xx = 0; xx < EventListeners.Count; xx++) {
 				var ee = EventListeners[xx];
 				if (source == ee.WebView 
@@ -297,12 +297,12 @@ Mt.App.removeEventListener = function (name, fn) {
 	public class EventListener {
 		public UIWebView WebView { get; set; }
 		public string EventName { get; set; }
-		public Func<FireEventData, Void> Event { get; set; }
+		public Action<FireEventData> Event { get; set; }
 		
 		public EventListener() {
 		}
 		
-		public EventListener(UIWebView WebView, string EventName, Func<FireEventData, Void> Event) {
+		public EventListener(UIWebView WebView, string EventName, Action<FireEventData> Event) {
 			this.WebView = WebView;
 			this.EventName = EventName;
 			this.Event = Event;
