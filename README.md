@@ -87,5 +87,8 @@ viewController.WebView.AddEventListener( "promptUser", delegate(FireEventData ar
 
 ## History 
 
+### 6/29/2013 
+* Changed 'Func<>' into 'Action<>' call for the latest version of MonoTouch
+
 ### 5/1/2012 
 * Initial Release
