@@ -87,6 +87,9 @@ viewController.WebView.AddEventListener( "promptUser", delegate(FireEventData ar
 
 ## History 
 
+### 7/9/2013 
+* Updated to use jXHR library so you can use JsBridge across domains and on remote sites.
+
 ### 6/29/2013 
 * Changed 'Func<>' into 'Action<>' call for the latest version of MonoTouch
 
