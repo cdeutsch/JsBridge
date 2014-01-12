@@ -87,6 +87,9 @@ viewController.WebView.AddEventListener( "promptUser", delegate(FireEventData ar
 
 ## History 
 
+### 1/12/2014
+* Merged "jsbridge mac implementation" from codingday
+
 ### 7/9/2013 
 * Updated to use jXHR library so you can use JsBridge across domains and on remote sites.
 
