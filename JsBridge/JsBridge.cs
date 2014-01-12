@@ -1,11 +1,24 @@
 using System;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
+
+
+#if MONOMAC
+using MonoMac.Foundation;
+using MonoMac.WebKit;
+using WebView = MonoMac.WebKit.WebView;
+using Class = MonoMac.ObjCRuntime.Class;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using WebView = MonoTouch.UIKit.UIWebView;
+using Class = MonoTouch.ObjCRuntime.Class;
+#endif
+
 
 namespace cdeutsch
 {
@@ -248,23 +261,37 @@ Mt.App.removeEventListener = function (name, fn) {
 
         public static void EnableJsBridge() {
             if (!protocolRegistered) {              
-                NSUrlProtocol.RegisterClass (new MonoTouch.ObjCRuntime.Class (typeof (AppProtocolHandler)));
+                NSUrlProtocol.RegisterClass (new Class (typeof (AppProtocolHandler)));
+
 
                 protocolRegistered = true;
             }
         }
 
-        public static void InjectMtJavascript(this UIWebView webView) {
-            webView.EvaluateJavascript(MT_JAVASCRIPT);
+        public static void InjectMtJavascript(this WebView webView) {
+            #if MONOMAC
+                InjectMtJavascript(webView, MT_JAVASCRIPT);
+            #else 
+                 webView.EvaluateJavascript(MT_JAVASCRIPT);
+            #endif
+        }
+
+        public static void InjectMtJavascript(this WebView webView, string script) {
+            #if MONOMAC
+                 var document = webView.MainFrame.DomDocument;
+                document.EvaluateWebScript(script);
+            #else 
+             webView.EvaluateJavascript(script);
+            #endif
         }
 		
 		private static List<EventListener> EventListeners = new List<EventListener>();
 		
-		public static void AddEventListener (this UIWebView source, string EventName, Action<FireEventData> Event) {
+		public static void AddEventListener (this WebView source, string EventName, Action<FireEventData> Event) {
 			EventListeners.Add( new EventListener(source, EventName, Event) );
 		}
 		
-		public static void RemoveEventListener (this UIWebView source, string EventName, Action<FireEventData> Event) {
+		public static void RemoveEventListener (this WebView source, string EventName, Action<FireEventData> Event) {
 			for(int xx = 0; xx < EventListeners.Count; xx++) {
 				var ee = EventListeners[xx];
 				if (source == ee.WebView 
@@ -276,11 +303,11 @@ Mt.App.removeEventListener = function (name, fn) {
 			}
 		}
 		
-		public static void FireEvent (this UIWebView source, string EventName, Object Data) {
+        public static void FireEvent (this WebView source, string EventName, Object Data) {
 			// call javascript event hanlder code
 			string json = SimpleJson.SerializeObject(Data);
             source.BeginInvokeOnMainThread ( delegate{ 
-			    source.EvaluateJavascript(string.Format("Mt.App._dispatchEvent('{0}', {1});", EventName, json));
+                source.InjectMtJavascript(string.Format("Mt.App._dispatchEvent('{0}', {1});", EventName, json));
             });
 		}
 		
@@ -307,7 +334,13 @@ Mt.App.removeEventListener = function (name, fn) {
             return forRequest;
         }
 
+        public AppProtocolHandler(IntPtr ptr) : base(ptr)
+        {
+        }
+
+        #if !MONOMAC
         [Export ("initWithRequest:cachedResponse:client:")]
+        #endif
         public AppProtocolHandler (NSUrlRequest request, NSCachedUrlResponse cachedResponse, NSUrlProtocolClient client) 
             : base (request, cachedResponse, client)
         {
@@ -323,11 +356,12 @@ Mt.App.removeEventListener = function (name, fn) {
 				var dataToks = parameters[1].Split('=');
 				if (callbackToks.Length > 1 && dataToks.Length > 1) {
 
+
 					// Determine what to do here based on the url 
 					var appUrl = new AppUrl() {
 						Module = Request.Url.Host,
-						Method = Request.Url.RelativePath.Substring(1),
-						JsonData = System.Web.HttpUtility.UrlDecode(dataToks[1])
+                        Method = Request.Url.RelativePath.Substring(1),
+                        JsonData = System.Web.HttpUtility.UrlDecode(dataToks[1])
 					};
 
 					// this is a request from mt.js so handle it.
@@ -380,14 +414,14 @@ Mt.App.removeEventListener = function (name, fn) {
 
 
 	public class EventListener {
-		public UIWebView WebView { get; set; }
+		public WebView WebView { get; set; }
 		public string EventName { get; set; }
 		public Action<FireEventData> Event { get; set; }
 		
 		public EventListener() {
 		}
 		
-		public EventListener(UIWebView WebView, string EventName, Action<FireEventData> Event) {
+		public EventListener(WebView WebView, string EventName, Action<FireEventData> Event) {
 			this.WebView = WebView;
 			this.EventName = EventName;
 			this.Event = Event;
