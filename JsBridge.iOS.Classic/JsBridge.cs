@@ -6,8 +6,22 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
+#if __UNIFIED__
+using UIKit;
+using Foundation;
+using WebView = UIKit.UIWebView;
+using Class = ObjCRuntime.Class;
 
-#if MONOMAC
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using CGRect = global::System.Drawing.RectangleF;
+using CGSize = global::System.Drawing.SizeF;
+using CGPoint = global::System.Drawing.PointF;
+
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#elif MONOMAC
 using MonoMac.Foundation;
 using MonoMac.WebKit;
 using WebView = MonoMac.WebKit.WebView;
@@ -338,6 +352,13 @@ Mt.App.removeEventListener = function (name, fn) {
         {
         }
 
+        #if __UNIFIED__
+        public AppProtocolHandler (NSUrlRequest request, NSCachedUrlResponse cachedResponse, INSUrlProtocolClient client) 
+            : base (request, cachedResponse, client)
+        {
+        }
+        #else
+
         #if !MONOMAC
         [Export ("initWithRequest:cachedResponse:client:")]
         #endif
@@ -345,6 +366,8 @@ Mt.App.removeEventListener = function (name, fn) {
             : base (request, cachedResponse, client)
         {
         }
+
+        #endif
 
         public override void StartLoading ()
         {
@@ -392,9 +415,9 @@ Mt.App.removeEventListener = function (name, fn) {
 					// indicate success.
 					var data = NSData.FromString(callbackToks[1] + "({'success' : '1'});");
 					using (var response = new NSUrlResponse (Request.Url, "text/javascript", Convert.ToInt32(data.Length), "utf-8")) {
-						Client.ReceivedResponse (this, response, NSUrlCacheStoragePolicy.NotAllowed);
-						Client.DataLoaded (this, data);
-						Client.FinishedLoading (this);
+                        Client.ReceivedResponse (this, response, NSUrlCacheStoragePolicy.NotAllowed);
+                        Client.DataLoaded (this, data);
+                        Client.FinishedLoading (this);
 					}
 
 					return;                            
