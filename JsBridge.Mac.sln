@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Mac.Classic.Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Mac.Unified.Sample", "JsBridge.Mac.Unified.Sample\JsBridge.Mac.Unified.Sample.csproj", "{C28C8866-0041-4C99-AB01-A2FAD80622D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Mac.Unified", "JsBridge.Mac.Unified\JsBridge.Mac.Unified.csproj", "{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Mac.Unified", "JsBridge.Mac.Unified\JsBridge.Mac.Unified.csproj", "{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +38,16 @@ Global
 		{58103E60-5558-477F-8CD3-B2B3A51F5D86}.Release|iPhone.Build.0 = Release|Any CPU
 		{58103E60-5558-477F-8CD3-B2B3A51F5D86}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{58103E60-5558-477F-8CD3-B2B3A51F5D86}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Release|iPhone.Build.0 = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{94A3E742-2AD1-40F1-86BD-5C70CBDCF52A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.AppStore|Any CPU.ActiveCfg = AppStore|Any CPU
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.AppStore|Any CPU.Build.0 = AppStore|Any CPU
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -48,19 +58,8 @@ Global
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.Release|iPhone.Build.0 = Release|Any CPU
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{C28C8866-0041-4C99-AB01-A2FAD80622D0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.AppStore|Any CPU.Build.0 = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Release|iPhone.Build.0 = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = JsBridge.Mac.Unified.Sample\JsBridge.Mac.Unified.Sample.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.inheritsSet = null

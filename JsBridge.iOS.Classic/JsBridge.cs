@@ -7,11 +7,17 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 
 #if __UNIFIED__
+#if MAC
+using WebKit;
+using Foundation;
+using WebView = WebKit.WebView;
+using Class = ObjCRuntime.Class;
+#else
 using UIKit;
 using Foundation;
 using WebView = UIKit.UIWebView;
 using Class = ObjCRuntime.Class;
-
+#endif
 // Mappings Unified CoreGraphic classes to MonoTouch classes
 using CGRect = global::System.Drawing.RectangleF;
 using CGSize = global::System.Drawing.SizeF;
@@ -283,7 +289,7 @@ Mt.App.removeEventListener = function (name, fn) {
         }
 
         public static void InjectMtJavascript(this WebView webView) {
-            #if MONOMAC
+            #if MONOMAC || MAC
                 InjectMtJavascript(webView, MT_JAVASCRIPT);
             #else 
                  webView.EvaluateJavascript(MT_JAVASCRIPT);
@@ -291,7 +297,7 @@ Mt.App.removeEventListener = function (name, fn) {
         }
 
         public static void InjectMtJavascript(this WebView webView, string script) {
-            #if MONOMAC
+            #if MONOMAC || MAC
                  var document = webView.MainFrame.DomDocument;
                 document.EvaluateWebScript(script);
             #else 
@@ -352,14 +358,14 @@ Mt.App.removeEventListener = function (name, fn) {
         {
         }
 
-        #if __UNIFIED__
+        #if __UNIFIED__ && !MAC
         public AppProtocolHandler (NSUrlRequest request, NSCachedUrlResponse cachedResponse, INSUrlProtocolClient client) 
             : base (request, cachedResponse, client)
         {
         }
         #else
 
-        #if !MONOMAC
+        #if !MONOMAC && !MAC
         [Export ("initWithRequest:cachedResponse:client:")]
         #endif
         public AppProtocolHandler (NSUrlRequest request, NSCachedUrlResponse cachedResponse, NSUrlProtocolClient client) 
