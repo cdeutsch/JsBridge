@@ -10,6 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>cdeutsch</RootNamespace>
     <AssemblyName>JsBridge.Classic</AssemblyName>
+    <ReleaseVersion>1.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -69,7 +69,6 @@ Global
 		{CBA08DFE-33BC-4895-8A9D-C2449B755DD9}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = JsBridge.iOS.Unified.Sample\JsBridge.iOS.Unified.Sample.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.inheritsSet = null
@@ -86,5 +85,6 @@ Global
 		$0.TextStylePolicy = $4
 		$4.inheritsSet = null
 		$4.scope = text/html
+		version = 1.5
 	EndGlobalSection
 EndGlobal

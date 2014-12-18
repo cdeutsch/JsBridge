@@ -1,12 +1,6 @@
-# MonoTouch JsBridge
+# JsBridge
 
-This library allows for bidirectional communication with the UIWebView in Monotouch.
-
-## Requirements
-
-* MonoTouch 5.3.3 (as of 5/1/2012 this is an Alpha) is required due to the use of registering a custom url protocol using NSUrlProtocol.
-http://docs.xamarin.com/ios/releases/MonoTouch_5/MonoTouch_5.3#MonoTouch_5.3.3
-
+Simpler bidirectional communication between JavaScript in a UIWebView and C# in your native app.
 
 ## Usage
 
@@ -55,7 +49,7 @@ Mt.App.addEventListener('handleNativeEvent', function(data) {
 
 ### Native Side
 
-From your MonoTouch application you can interact with your UIWebView as follows:
+From your Xamarin application you can interact with your UIWebView as follows:
 
 #### Fire Events on the Browser side 
 
@@ -86,6 +80,9 @@ viewController.WebView.AddEventListener( "promptUser", delegate(FireEventData ar
 
 
 ## History 
+
+### 12/18/2014
+* Added Xamarin.iOS Unified support (Xamarin.Mac Unified support is broken)
 
 ### 1/12/2014
 * Merged "jsbridge mac implementation" from codingday
