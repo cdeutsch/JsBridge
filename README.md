@@ -2,6 +2,10 @@
 
 Simpler bidirectional communication between JavaScript in a UIWebView and C# in your native app.
 
+## Requirements
+
+* Xamarin.iOS 8.6 is required for Unified support due to a bug in lower versions.
+
 ## Usage
 
 Reference the JsBridge project or DLL in your Project.
