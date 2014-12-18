@@ -3,13 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{63EEEE1D-B4F4-499E-872D-0AFB51AC5E8B}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{C03A041F-E718-42BF-ACA2-195423C20086}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>cdeutsch</RootNamespace>
-    <AssemblyName>JsBridge</AssemblyName>
+    <RootNamespace>JsBridge.iOS.Unified</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>JsBridge.iOS.Unified</AssemblyName>
+    <ReleaseVersion>1.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,37 +24,38 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
-    <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iPhone\AppStore</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
+    <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Web.Services" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="JsBridge.cs" />
-    <Compile Include="libs\SimpleJson.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="libs\" />
+    <Folder Include="Resources\" />
     <Folder Include="javascript\" />
+    <Folder Include="libs\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="javascript\mt.js" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\JsBridge.iOS.Classic\libs\SimpleJson.cs">
+      <Link>libs\SimpleJson.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.iOS.Classic\JsBridge.cs">
+      <Link>JsBridge.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <None Include="..\JsBridge.iOS.Classic\javascript\mt.js">
+      <Link>javascript\mt.js</Link>
+    </None>
   </ItemGroup>
 </Project>

@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{539F537A-E2E0-4F8E-ADB0-39585A85B078}</ProjectGuid>
     <ProjectTypeGuids>{42C0BBD9-55CE-4FC1-8D90-A7348ABAFB23};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>JsBridgeMacSample</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <AssemblyName>JsBridge-Mac-Sample</AssemblyName>
+    <AssemblyName>JsBridge.Mac.Classic.Sample</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,9 +65,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
-    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -95,16 +93,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\JsBridge-Mac\JsBridge-Mac.csproj">
+    <ProjectReference Include="..\JsBridge.Mac.Classic\JsBridge.Mac.Classic.csproj">
       <Project>{58103E60-5558-477F-8CD3-B2B3A51F5D86}</Project>
-      <Name>JsBridge-Mac</Name>
+      <Name>JsBridge.Mac.Classic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="..\JsBridgeExample\www\index.html">
+    <BundleResource Include="..\JsBridge.iOS.Classic.Sample\www\index.html">
       <Link>www\index.html</Link>
     </BundleResource>
-    <BundleResource Include="..\JsBridgeExample\www\js\mt.js">
+    <BundleResource Include="..\JsBridge.iOS.Classic.Sample\www\js\mt.js">
       <Link>www\js\mt.js</Link>
     </BundleResource>
   </ItemGroup>

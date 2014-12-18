@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{58103E60-5558-477F-8CD3-B2B3A51F5D86}</ProjectGuid>
     <ProjectTypeGuids>{42C0BBD9-55CE-4FC1-8D90-A7348ABAFB23};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>JsBridgeMac</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <AssemblyName>JsBridge-Mac</AssemblyName>
+    <AssemblyName>JsBridge.Mac.Classic</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,9 +66,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="MonoMac, Version=0.0.0.0, Culture=neutral" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -76,16 +74,16 @@
     <Folder Include="javascript\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\JsBridge\javascript\mt.js">
+    <None Include="..\JsBridge.iOS.Classic\javascript\mt.js">
       <Link>javascript\mt.js</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\JsBridge\libs\SimpleJson.cs">
+    <Compile Include="..\JsBridge.iOS.Classic\libs\SimpleJson.cs">
       <Link>libs\SimpleJson.cs</Link>
     </Compile>
-    <Compile Include="..\JsBridge\JsBridge.cs">
+    <Compile Include="..\JsBridge.iOS.Classic\JsBridge.cs">
       <Link>JsBridge.cs</Link>
     </Compile>
   </ItemGroup>
