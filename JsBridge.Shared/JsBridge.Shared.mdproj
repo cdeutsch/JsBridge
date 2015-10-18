@@ -5,6 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ItemType>GenericProject</ItemType>
     <ProjectGuid>{D221B88D-C015-447B-BB4B-59A92A2D8F70}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ReleaseVersion>1.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
     <OutputPath>.</OutputPath>
@@ -16,5 +19,8 @@
   <ItemGroup>
     <None Include="javascript\mt.js" />
     <None Include="libs\SimpleJson.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JsBridgeCore.cs" />
   </ItemGroup>
 </Project>

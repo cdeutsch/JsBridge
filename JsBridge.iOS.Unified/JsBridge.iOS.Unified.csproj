@@ -45,16 +45,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\JsBridge.iOS.Classic\libs\SimpleJson.cs">
-      <Link>libs\SimpleJson.cs</Link>
-    </Compile>
     <Compile Include="..\JsBridge.iOS.Classic\JsBridge.cs">
       <Link>JsBridge.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\JsBridgeCore.cs">
+      <Link>JsBridgeCore.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\libs\SimpleJson.cs">
+      <Link>libs\SimpleJson.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <None Include="..\JsBridge.iOS.Classic\javascript\mt.js">
+    <None Include="..\JsBridge.Shared\javascript\mt.js">
       <Link>javascript\mt.js</Link>
     </None>
   </ItemGroup>

@@ -48,6 +48,9 @@
     <Compile Include="..\JsBridge.Shared\libs\SimpleJson.cs">
       <Link>libs\SimpleJson.cs</Link>
     </Compile>
+    <Compile Include="..\JsBridge.Shared\JsBridgeCore.cs">
+      <Link>JsBridgeCore.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

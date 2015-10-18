@@ -48,13 +48,20 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Compile Include="JsBridge.cs" />
-    <Compile Include="libs\SimpleJson.cs" />
+    <Compile Include="..\JsBridge.Shared\JsBridgeCore.cs">
+      <Link>JsBridgeCore.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\libs\SimpleJson.cs">
+      <Link>libs\SimpleJson.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs\" />
     <Folder Include="javascript\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="javascript\mt.js" />
+    <None Include="..\JsBridge.Shared\javascript\mt.js">
+      <Link>javascript\mt.js</Link>
+    </None>
   </ItemGroup>
 </Project>

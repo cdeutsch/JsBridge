@@ -1,3 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace cdeutsch
+{
+	public static class JsBridgeCore
+	{
+		// most of this library is borrowed from Titanium, Copyright 2008-2012 Appcelerator, Inc. under the Apache License Version 2 http://www.apache.org/licenses/LICENSE-2.0
+		//I haven't implemented all the features they have.
+		#region MT_JAVASCRIPT
+		public static string MT_JAVASCRIPT = @"
 // jXHR library
 (function (global) {
     var SETTIMEOUT = global.setTimeout, // for better compression
@@ -132,7 +146,7 @@ Mt.App._JSON = function (object, bridge) {
             return object;
         case'string':
             if (bridge === 1)return Mt._bridgeEnc(object);
-            return '""' + object.replace(/""/g, '\\\\""').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') + '""'
+            return '""""' + object.replace(/""""/g, '\\\\""""').replace(/\\n/g, '\\\\n').replace(/\\r/g, '\\\\r') + '""""'
     }
     if ((object === null) || (object.nodeType == 1))return'null';
     if (object.constructor.toString().indexOf('Date') != -1) {
@@ -223,4 +237,114 @@ Mt.App.removeEventListener = function (name, fn) {
             }
         }
     }
-};
+};";
+		#endregion
+        			
+		private static List<EventListener> EventListeners = new List<EventListener>();
+
+        public static void AddEventListener (Object Source, string EventName, Action<FireEventData> Event) {
+			EventListeners.Add( new EventListener(Source, EventName, Event) );
+		}
+
+        public static void RemoveEventListener (Object Source, string EventName, Action<FireEventData> Event) {
+			for(int xx = 0; xx < EventListeners.Count; xx++) {
+				var ee = EventListeners[xx];
+                if (Source == ee.Source
+                    && string.Compare(EventName, ee.EventName, StringComparison.InvariantCultureIgnoreCase) == 0
+					&& ee.Event == Event) {
+					EventListeners.RemoveAt(xx);
+					break;
+				}
+			}
+		}
+
+		public static void JsEventFired (FireEventData feData) {
+			foreach(var ee in EventListeners.Where(oo => string.Compare(oo.EventName, feData.Name, StringComparison.InvariantCultureIgnoreCase) == 0)) {				
+				ee.Event(feData);				
+			}
+		}
+	}
+
+	public class EventListener {
+        public Object Source { get; set; }
+		public string EventName { get; set; }
+		public Action<FireEventData> Event { get; set; }
+
+		public EventListener() {
+		}
+
+        public EventListener(Object Source, string EventName, Action<FireEventData> Event) {
+            this.Source = Source;
+			this.EventName = EventName;
+			this.Event = Event;
+		}
+	}
+
+	public class AppUrl {
+		public string Module { get; set; }
+		public string Method { get; set; }
+		public string JsonData { get; set; }
+
+		public Object Deserialize() {
+			return SimpleJson.DeserializeObject(JsonData);
+		}
+
+		public T Deserialize<T>() {
+			return SimpleJson.DeserializeObject<T>(JsonData);
+		}
+
+		public FireEventData DeserializeFireEvent() {
+			if (string.Equals(Method, "fireEvent", StringComparison.InvariantCultureIgnoreCase)) {
+				return new FireEventData(JsonData);
+			}
+			else {
+				return null;
+			}
+		}
+
+		public LogData DeserializeLog() {
+			if (string.Equals(Method, "log", StringComparison.InvariantCultureIgnoreCase)) {
+				return new LogData(JsonData);
+			}
+			else {
+				return null;
+			}
+		}				
+	}
+
+
+	public class FireEventData {
+		public string Name { get; set; }
+		public JsonObject Data { get; set; }
+		public string JsonData { get; set; }
+
+		public FireEventData() {
+		}
+
+		public FireEventData(string Json) {
+			JsonObject feData = (JsonObject)SimpleJson.DeserializeObject(Json);
+			this.Name = feData["name"].ToString();
+			this.Data = (JsonObject)feData["event"];
+			// save json of data so user can desiralize in a typed object.
+			this.JsonData = SimpleJson.SerializeObject(this.Data);
+		}
+	}
+
+
+	public class LogData {
+		public string Level { get; set; }
+		public string Message { get; set; }
+
+		public LogData() {
+		}
+
+		public LogData(string Json) {
+			JsonObject lData = (JsonObject)SimpleJson.DeserializeObject(Json);
+			this.Level = lData["level"].ToString();
+			if (lData["message"] != null) {
+				this.Message = lData["message"].ToString();
+			}
+		}
+	}
+}
+
