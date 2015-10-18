@@ -31,6 +31,8 @@ namespace JsBridge.iOS.Unified.Sample
         {
             base.ViewDidLoad ();
 
+            cdeutsch.JsBridge.EnableJsBridge();
+
             //// load our local index.html file 
             // get path to file.
             string path = NSBundle.MainBundle.PathForResource( "www/index", "html" );

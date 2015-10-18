@@ -40,8 +40,6 @@ namespace JsBridge.iOS.Unified.Sample
         }
         public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
         {
-            cdeutsch.JsBridge.EnableJsBridge();
-
             return true;
         }
     }
