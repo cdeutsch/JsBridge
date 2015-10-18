@@ -1,0 +1,54 @@
+﻿@model Model1
+<!doctype html>
+<html>
+	<head>
+		<title>MonoTouch JsBridge</title>
+	</head>
+	<body>
+		<div role="main">
+			<p>@Model.Text</p>
+            <a href="javascript:Mt.App.fireEvent('nativeSheet', { msg: 'My custom action' });">Click Me to show a Native Action Sheet</a>
+            <br>
+		</div>
+
+        <!-- Be sure you include a copy of mt.js or call "myWebView.InjectMtJavascript();" on every page you want to use JsBridg in -->
+        <script src="js/mt.js"></script>
+		<script>
+			window.onload = function(e) {
+				console.log( 'loaded' );
+                
+                Mt.API.info( 'log "loaded" call on native side' );
+                     
+				// listen for doBrowserStuff event triggered from native code.
+				Mt.App.addEventListener('doBrowserStuff', function(data) {
+			
+					console.log('doBrowserStuff Callback:');
+					console.log(data.Message);
+			
+				});
+			
+				// fire doNativeStuff in native code.
+				Mt.App.fireEvent('doNativeStuff', { 
+                    msg: 'Hi, this msg is from the browser.',
+                    extra: 'You can send more then one property back',
+                    answer: 42
+                });
+
+			};
+
+            // do this, to write console log calls to Native 
+            //    NOTE: this is overridden in next statement, just here to show you how to do it.
+            console.log = function(msg) {
+                Mt.API.info( msg );
+            };
+
+			// write console log calls to body.
+			console.log = function(msg) {
+				var p = document.createElement('p');
+			    p.innerHTML = msg;
+				document.getElementsByTagName('body')[0].appendChild(p);
+			};
+
+		</script>
+	</body>
+</html>

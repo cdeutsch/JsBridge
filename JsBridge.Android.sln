@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Android", "JsBridge.Android\JsBridge.Android.csproj", "{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "JsBridge.Shared", "JsBridge.Shared\JsBridge.Shared.mdproj", "{D221B88D-C015-447B-BB4B-59A92A2D8F70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsBridge.Android.Sample", "JsBridge.Android.Sample\JsBridge.Android.Sample.csproj", "{2BC14995-01C3-4BDC-AC22-247D5C66A920}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Default|Any CPU = Default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC14995-01C3-4BDC-AC22-247D5C66A920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Debug|Any CPU.ActiveCfg = Default|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Debug|Any CPU.Build.0 = Default|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Default|Any CPU.ActiveCfg = Default|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Default|Any CPU.Build.0 = Default|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Release|Any CPU.ActiveCfg = Default|Any CPU
+		{D221B88D-C015-447B-BB4B-59A92A2D8F70}.Release|Any CPU.Build.0 = Default|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D243CD3A-DED4-4F85-9DC1-DEFD3CFBD4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
