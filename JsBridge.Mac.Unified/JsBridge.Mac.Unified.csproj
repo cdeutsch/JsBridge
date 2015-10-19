@@ -28,6 +28,7 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -41,6 +42,7 @@
     <EnablePackageSigning>false</EnablePackageSigning>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,16 +57,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\JsBridge.iOS.Classic\libs\SimpleJson.cs">
-      <Link>libs\SimpleJson.cs</Link>
-    </Compile>
     <Compile Include="..\JsBridge.iOS.Classic\JsBridge.cs">
       <Link>JsBridge.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\libs\SimpleJson.cs">
+      <Link>libs\SimpleJson.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\JsBridgeCore.cs">
+      <Link>JsBridgeCore.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <ItemGroup>
-    <None Include="..\JsBridge.iOS.Classic\javascript\mt.js">
+    <None Include="..\JsBridge.Shared\javascript\mt.js">
       <Link>javascript\mt.js</Link>
     </None>
   </ItemGroup>

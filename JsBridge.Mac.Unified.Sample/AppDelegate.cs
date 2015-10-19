@@ -13,7 +13,7 @@ namespace JsBridge.Mac.Unified.Sample
         {
         }
 
-        public override void FinishedLaunching (NSObject notification)
+        public override void DidFinishLaunching (NSNotification notification)
         {
             mainWindowController = new MainWindowController ();
             mainWindowController.Window.MakeKeyAndOrderFront (this);

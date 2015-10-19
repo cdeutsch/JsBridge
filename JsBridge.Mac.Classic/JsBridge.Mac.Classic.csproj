@@ -27,6 +27,7 @@
     <CodeSigningKey>Mac Developer</CodeSigningKey>
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -42,6 +43,7 @@
     <CodeSigningKey>Developer ID Application</CodeSigningKey>
     <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>true</CreatePackage>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -58,6 +60,7 @@
     <CodeSigningKey>3rd Party Mac Developer Application</CodeSigningKey>
     <EnableCodeSigning>true</EnableCodeSigning>
     <EnablePackageSigning>true</EnablePackageSigning>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -73,18 +76,21 @@
     <Folder Include="libs\" />
     <Folder Include="javascript\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\JsBridge.iOS.Classic\javascript\mt.js">
-      <Link>javascript\mt.js</Link>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="..\JsBridge.iOS.Classic\libs\SimpleJson.cs">
-      <Link>libs\SimpleJson.cs</Link>
-    </Compile>
     <Compile Include="..\JsBridge.iOS.Classic\JsBridge.cs">
       <Link>JsBridge.cs</Link>
     </Compile>
+    <Compile Include="..\JsBridge.Shared\libs\SimpleJson.cs">
+      <Link>libs\SimpleJson.cs</Link>
+    </Compile>
+    <Compile Include="..\JsBridge.Shared\JsBridgeCore.cs">
+      <Link>JsBridgeCore.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\JsBridge.Shared\javascript\mt.js">
+      <Link>javascript\mt.js</Link>
+    </None>
   </ItemGroup>
 </Project>

@@ -60,7 +60,6 @@ Global
 		{CAD7F5B8-EFCD-4DFD-90DC-CD45B705CE71}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = JsBridge.Mac.Unified.Sample\JsBridge.Mac.Unified.Sample.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.inheritsSet = null
