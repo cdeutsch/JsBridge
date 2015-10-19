@@ -35,7 +35,7 @@ namespace cdeutsch
 		}
 	}
 
-	public class HybridWebViewClient : WebViewClient
+	public class JsBridgeWebViewClient : WebViewClient
 	{
 		public override WebResourceResponse ShouldInterceptRequest (WebView webView, string url)
 		{

@@ -27,8 +27,8 @@ namespace JsBridge.Android.Sample
 			webView.Settings.JavaScriptEnabled = true;
 
 			// Use subclassed WebViewClient to intercept hybrid native calls
-			var hybridWebViewClient = new cdeutsch.HybridWebViewClient();
-			webView.SetWebViewClient(hybridWebViewClient);
+            var jsBridgeWebViewClient = new cdeutsch.JsBridgeWebViewClient();
+			webView.SetWebViewClient(jsBridgeWebViewClient);
 
 			// Render the view from the type generated from RazorView.cshtml
 			var model = new Model1() { Text = "Page Title from the Razor Model" };
